@@ -13,13 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
 from podomarket.views import CustomPasswordChangeView
-from podomarket_project import settings
 
 urlpatterns = [
     # admin
@@ -29,6 +30,11 @@ urlpatterns = [
     path('', include('podomarket.urls')),
 
     # allauth
+    path(
+        'email-confirmation-required/',
+        TemplateView.as_view(template_name='account/email_confirmation_required.html'),
+        name='account_email_confirmation_required',
+    ),
     path(
         'email-confirmation-done/',
         TemplateView.as_view(template_name='account/email_confirmation_done.html'),
